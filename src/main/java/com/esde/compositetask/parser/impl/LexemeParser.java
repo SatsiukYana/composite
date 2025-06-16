@@ -15,11 +15,9 @@ public class LexemeParser extends AbstractParser {
 
     @Override
     public TextElement parse(String text) {
-        logger.info("▶ Парсинг лексем. Входной текст: '{}'", text);
-
-        // 🔢 ВЫЧИСЛЯЕМ арифметические выражения ДО разбиения на лексемы
+        logger.info("Парсинг лексем. Входной текст: '{}'", text);
         text = ExpressionParser.parseAndEvaluate(text);
-        logger.info("✅ После интерпретации арифметики: '{}'", text);
+        logger.info("После интерпретации арифметики: '{}'", text);
 
         TextComposite composite = new TextComposite(ElementType.LEXEME);
         Matcher matcher = LEXEME_PATTERN.matcher(text);
@@ -37,7 +35,7 @@ public class LexemeParser extends AbstractParser {
             composite.add(lexemeElement);
         }
 
-        logger.info("✅ Лексем распарсено: {}", composite.getChild().size());
+        logger.info("Лексем распарсено: {}", composite.getChild().size());
         return composite;
     }
 }

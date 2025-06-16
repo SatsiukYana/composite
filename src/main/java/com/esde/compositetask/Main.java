@@ -9,15 +9,12 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Пример: читаем текст из файла или строки
             String inputText = Files.readString(Paths.get("data/arithmetic.txt"));
 
-            // Инициализация парсера
             TextParser parser = new TextParser();
             TextElement parsed = parser.parse(inputText);
 
-            // Вывод восстановленного текста из структуры Composite
-            System.out.println("----- Reconstructed Text -----");
+            System.out.println("Reconstructed Text");
             System.out.println(parsed.toString());
 
         } catch (Exception e) {

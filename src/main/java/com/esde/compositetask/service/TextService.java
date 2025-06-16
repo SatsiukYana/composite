@@ -6,14 +6,12 @@ import java.util.*;
 
 public class TextService {
 
-    // 1. Сортировка абзацев по количеству предложений
     public List<TextElement> sortParagraphsBySentenceCount(TextElement text) {
         List<TextElement> paragraphs = new ArrayList<>(text.getChild());
         paragraphs.sort(Comparator.comparingInt(p -> p.getChild().size()));
         return paragraphs;
     }
 
-    // 2. Поиск предложений с самым длинным словом
     public List<String> findSentencesWithLongestWord(TextElement text) {
         int maxLength = 0;
         List<String> result = new ArrayList<>();
@@ -37,7 +35,6 @@ public class TextService {
         return result;
     }
 
-    // 3. Удаление предложений с числом слов меньше заданного
     public TextElement removeShortSentences(TextElement text, int minWords) {
         TextComposite resultText = new TextComposite(text.getElementType());
 
@@ -61,7 +58,6 @@ public class TextService {
         return resultText;
     }
 
-    // 4. Подсчёт повторяющихся слов без учёта регистра
     public Map<String, Integer> countDuplicateWords(TextElement text) {
         Map<String, Integer> wordFrequency = new HashMap<>();
 
@@ -81,7 +77,6 @@ public class TextService {
         return wordFrequency;
     }
 
-    // 5. Подсчёт гласных и согласных в предложении
     public Map<String, Integer> countVowelsAndConsonants(TextElement sentence) {
         int vowels = 0;
         int consonants = 0;

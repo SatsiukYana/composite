@@ -3,10 +3,10 @@ package com.esde.compositetask.parser;
 import com.esde.compositetask.component.TextElement;
 import com.esde.compositetask.parser.impl.*;
 
-public class TextParser {
+public class CompositeTextParser {
     private final CustomParser parserChain;
 
-    public TextParser() {
+    public CompositeTextParser() {
         ParagraphParser paragraphParser = new ParagraphParser();
         SentenceParser sentenceParser = new SentenceParser();
         LexemeParser lexemeParser = new LexemeParser();

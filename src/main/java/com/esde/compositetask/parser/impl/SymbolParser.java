@@ -10,7 +10,7 @@ public class SymbolParser extends AbstractParser {
 
     @Override
     public TextElement parse(String text) {
-        logger.info("Начало парсинга лексемы на символы: '{}'", text);
+        logger.info("Parsing lexeme into symbols: '{}'", text);
 
         TextComposite composite = new TextComposite(ElementType.LEXEME);
 
@@ -20,7 +20,7 @@ public class SymbolParser extends AbstractParser {
             composite.add(new TextSymbol(s, type));
         }
 
-        logger.info("Символов распарсено: {}", composite.getChild().size());
+        logger.info("Symbols parsed: {}", composite.getChild().size());
         return composite;
     }
 }

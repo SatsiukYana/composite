@@ -2,11 +2,22 @@ package com.esde.compositetask.interpreter;
 
 import com.esde.compositetask.interpreter.impl.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ExpressionParser {
     private static final Pattern EXPRESSION_PATTERN = Pattern.compile("([0-9]*\\.?[0-9]+)\\s*([+\\-*/])\\s*([0-9]*\\.?[0-9]+)");
+    private static final Map<String, BiFunction<ExpressionInterpreter, ExpressionInterpreter, ExpressionInterpreter>> OPERATORS = new HashMap<>();
+
+    static {
+        OPERATORS.put("+", AddExpression::new);
+        OPERATORS.put("-", SubtractExpression::new);
+        OPERATORS.put("*", MultiplyExpression::new);
+        OPERATORS.put("/", DivideExpression::new);
+    }
 
     public static String parseAndEvaluate(String text) {
         Matcher matcher = EXPRESSION_PATTERN.matcher(text);
@@ -34,18 +45,11 @@ public class ExpressionParser {
     }
 
     private static ExpressionInterpreter createExpression(ExpressionInterpreter left, ExpressionInterpreter right, String operator) {
-        switch (operator) {
-            case "+":
-                return new AddExpression(left, right);
-            case "-":
-                return new SubtractExpression(left, right);
-            case "*":
-                return new MultiplyExpression(left, right);
-            case "/":
-                return new DivideExpression(left, right);
-            default:
-                throw new IllegalArgumentException("Unknown operator: " + operator);
+        BiFunction<ExpressionInterpreter, ExpressionInterpreter, ExpressionInterpreter> constructor = OPERATORS.get(operator);
+        if (constructor == null) {
+            throw new IllegalArgumentException("Unknown operator: " + operator);
         }
+        return constructor.apply(left, right);
     }
 
     private static String formatResult(double value) {
